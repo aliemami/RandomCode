@@ -1,35 +1,17 @@
 
-
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Date;
-import java.util.StringTokenizer;
-
 public class Triangle {
-	class Node {
-		public Node left = null;
-		public Node right = null;
-		public Node next = null;
-		public Long value= null;
-		public Long heavyWeight = null;
-		public Long lightWeight = null;
-		public Node(Long val) {	this.value = val;}
-		public String toString() { return value+"";}
-	}
 
 	private Node head = null;
 	private Node rowHead = null;
 	private Node parent = null;
+
 	private long min = 0;
 	private long max = 0;
 
 	private int level =0;
 	private int numNodesInRow = 0;
 
-	private void insert(Long value) {
+	public void insert(Long value) {
 		Node myNode = new Node(value);
 		//if the head 
 		if (head == null) {
@@ -76,7 +58,7 @@ public class Triangle {
 		System.out.println("");
 	}
 
-	private void calcWeight(){
+	public void calcWeight(){
 		calcWeightHelper(head);
 	}
 	private void calcWeightHelper(Node node) {
@@ -130,7 +112,7 @@ public class Triangle {
 		};
 	}
 
-	private long calcPathMaximum () {
+	public long calcPathMaximum () {
 		Node node = head;
 		while(node!=null) {
 			System.out.print(node.value + "->");
@@ -150,7 +132,7 @@ public class Triangle {
 	}
 
 
-	private long calcPathMinimum () {
+	public long calcPathMinimum () {
 		Node node = head;
 		while(node!=null) {
 			System.out.print(node.value + "->");
@@ -172,58 +154,6 @@ public class Triangle {
 	}
 
 
-	public static void main(String [] args) {
-		try {
-			System.out.print("Enter the Path to the Input File: ");		
-			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-			String filepath = null;
-			filepath = br.readLine();
-			System.out.println("You Entered: : " + filepath);
-
-			Triangle tri = new Triangle();
-			@SuppressWarnings("resource")
-			BufferedReader in = new BufferedReader(new FileReader(filepath));
-			long startTime = (new Date()).getTime();
-
-			String ln="";
-
-			while ((ln = in.readLine() )!= null) {
-				if(ln.trim().length() > 0) {
-					StringTokenizer st = new StringTokenizer(ln);
-					while(st.hasMoreTokens()){
-						String token =  st.nextToken();
-						tri.insert(Long.valueOf(token));
-					}
-				}
-			}
-
-			long endTime = (new Date()).getTime();
-			long duration = ((endTime - startTime));
-			System.out.println("Building the structure took:" + duration + " milisec.");
-
-			System.out.println("");
-
-			startTime = (new Date()).getTime();
-			tri.calcWeight();
-			endTime = (new Date()).getTime();
-			duration = ((endTime - startTime));
-			System.out.println("Calculating weight took :" + duration + " milisec.");
-
-			System.out.println("");
-
-			startTime = (new Date()).getTime();
-			System.out.println("Maximum value: " + tri.calcPathMaximum() );
-			System.out.println("Minimum value: " + tri.calcPathMinimum() );
-			System.out.println("");
-
-			endTime = (new Date()).getTime();
-			duration = ((endTime - startTime));
-			System.out.println("Showing path to min/max took :" + duration + " milisec.");
-		} catch (FileNotFoundException e) {
-			System.out.println("File not found - try again");
-		} catch (NumberFormatException e) {
-		} catch (IOException e) {
-		}
-	}
+	
 
 }
